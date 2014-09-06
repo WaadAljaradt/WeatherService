@@ -140,7 +140,7 @@ public class UtilMap {
 		return latestweather;
 	}
 	/**
-	 * This Function checks if string only contains alphabetic 
+	 * This Function checks if string only contains alphabetic with strings
 	 * @param string
 	 * @return boolean
 	 */
@@ -149,7 +149,7 @@ public class UtilMap {
 		if(s == null|| s.isEmpty()){
 			return false;
 		}
-		String pattern = "^[a-zA-Z]*$";
+		String pattern = "^[a-zA-Z ]*$";
 		if (s.matches(pattern)) {
 			return true;
 		}

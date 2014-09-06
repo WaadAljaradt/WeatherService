@@ -1,14 +1,14 @@
 package com.weather.bo;
 
+import java.text.DecimalFormat;
 import java.util.Date;
-
 
 import javax.ws.rs.core.Response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.weather.persistence.model.City;
@@ -70,11 +70,11 @@ public class JsonParser {
 		logger.debug("weather  Date:  :" + weather.getDate());
 		weather.setCity(city);
 		JSONObject tempjsn = jsnObj.getJSONObject("main");
-		weather.setTemp(tempjsn.getDouble("temp"));
+		weather.setTemp(kelvinToCelsius(tempjsn.getDouble("temp")));
 		logger.debug("weather  temp:  :" + weather.getTemp());
-		weather.setTempMax(tempjsn.getDouble("temp_max"));
+		weather.setTempMax(kelvinToCelsius(tempjsn.getDouble("temp_max")));
 		logger.debug("weather  temp:  :" + weather.getTempMax());
-		weather.setTempMin(tempjsn.getDouble("temp_min"));
+		weather.setTempMin(kelvinToCelsius(tempjsn.getDouble("temp_min")));
 		logger.debug("weather  temp:  :" + weather.getTempMin());
 		city.getWeathers().add(weather);
 		// set sunrise and sunset
@@ -138,6 +138,20 @@ public class JsonParser {
 		logger.debug("In :" + methodName);
 		logger.debug("convert Json response to String");
 		return response.readEntity(String.class);
+	}
+	/**
+	 * This function convert degree from Kelvin To Celsius
+	 * @param temp temperature Celsius
+	 * @return : Double temperature Kelvin
+	 */
+	private Double kelvinToCelsius(Double temp){
+		logger.debug("In kelvinToCelsius param : "+ temp);
+		Double celTemp =temp -  273;
+		DecimalFormat df = new DecimalFormat("#.0000");
+		celTemp = Double.valueOf(df.format(celTemp));
+		logger.debug(" return Temp :"+ celTemp);
+		return celTemp;
+		
 	}
 
 }

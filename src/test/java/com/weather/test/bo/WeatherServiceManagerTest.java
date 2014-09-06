@@ -28,9 +28,7 @@ public class WeatherServiceManagerTest {
 	@Test
 	public void test() throws Exception {
 		WeatherInfo info =serviceManager.getWeatherInfo("dubai");
-		Assert.assertNotNull(info.getCity());
-		
-		
+		Assert.assertNotNull(info.getCity());		
 	}
 
 }

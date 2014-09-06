@@ -50,12 +50,13 @@ public class WeatherServiceManager {
 	@Transactional
 	public WeatherInfo getWeatherInfo(String cityName) throws Exception {
 		String methodName = "getWeatherInfo";
+		String responseName =null;
 		logger.info("In: " + className);
 		logger.debug("In :" + methodName);
 		logger.debug(" get weather info for City :" + cityName);
 		WeatherInfo info = new WeatherInfo();
 		Response response;
-		com.weather.persistence.model.City cityDB = dbManager.getCity(cityName);
+		
 		if(cityName == null || !utilMap.isAlpha(cityName)){
 			logger.error(" city entered is incorrect" + cityName);
 			info.setCode(404);
@@ -63,6 +64,7 @@ public class WeatherServiceManager {
 			return info;
 			
 		}
+		com.weather.persistence.model.City cityDB = dbManager.getCity(cityName);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (cityDB == null) {
 			logger.debug(" city Not found in data base , cityName :" + cityName);
@@ -76,6 +78,8 @@ public class WeatherServiceManager {
 			}
 			logger.debug("call json parser to create City object and save info from the response");
 			cityDB = jsonParser.ParseToCity(response, 0);
+			responseName = cityDB.getCityName();
+			cityDB.setCityName(cityName);
 			logger.debug("save city object to data base");
 			saveCity(cityDB);
 		} else {
@@ -97,6 +101,8 @@ public class WeatherServiceManager {
 						logger.debug("parse json to City, with flag 1 to indicate not first time city ");
 						cityDB = jsonParser.ParseToCity(response, 1);
 						cityDB.setId(id);
+						responseName = cityDB.getCityName();
+						cityDB.setCityName(cityName);
 						logger.debug("weather with new data need to be inserted in data base");
 						logger.debug(" call city update");
 						dbManager.updateCity(cityDB);
@@ -110,6 +116,7 @@ public class WeatherServiceManager {
 		}
 		logger.debug("map from city model to vo to be set in weatherInfo object later ");
 		City city = utilMap.getCityVo(cityDB);
+		city.setName(responseName);
 		info.setCity(city);
 		logger.debug("map from weather model to vo to be set in weatherInfo object later ");
 		Weather weather = utilMap.getWeatherVo(cityDB);

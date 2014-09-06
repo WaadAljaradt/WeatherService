@@ -145,7 +145,7 @@ public class DBManager {
 			}
 			logger.error("Error Message :"+e.getMessage());	
 			throw e;
-		}
-		
+		}	
 	}
+	
 }
