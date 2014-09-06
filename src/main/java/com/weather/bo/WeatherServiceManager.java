@@ -107,6 +107,9 @@ public class WeatherServiceManager {
 						logger.debug(" call city update");
 						dbManager.updateCity(cityDB);
 					}
+					else{
+						responseName = cityDB.getCityName();					
+					}
 				} catch (ParseException e) {
 					logger.error("Date parsing Error");
 					logger.error("Error Message"+ e.getMessage());
