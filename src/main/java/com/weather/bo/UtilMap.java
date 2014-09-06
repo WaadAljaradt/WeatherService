@@ -31,7 +31,7 @@ public class UtilMap {
 		logger.debug("map info from city of model form to Vo form ");
 		com.weather.service.vo.City cityVo = new com.weather.service.vo.City();
 		logger.debug("mapping Start ");
-		cityVo.setName(cityDB.getCityName());
+		cityVo.setName(cityDB.getResponse_name());
 		// set coordinate info
 		Coord coord = new Coord();
 		if (cityDB.getCoordinate() != null) {

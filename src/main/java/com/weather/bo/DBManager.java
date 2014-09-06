@@ -44,6 +44,7 @@ public class DBManager {
 		logger.debug("In :"+ methodName );
 		Map<String, Object> map = new HashMap<String, Object> ();
 		map.put("city_name", cityName);
+		map.put("response_name", cityName);
 		logger.debug("call list with cityName :" + cityName);
 		List<City> cities = cityDao.list(map, false);
 		if(cities == null ||cities.isEmpty()){

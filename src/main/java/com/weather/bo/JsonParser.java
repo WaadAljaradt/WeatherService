@@ -43,7 +43,7 @@ public class JsonParser {
 		JSONObject jsnObj = new JSONObject(strResponse);
 		logger.debug("start parsing :");
 		City city = new City();
-		city.setCityName(jsnObj.getString("name"));
+		city.setResponse_name(jsnObj.getString("name"));
 		logger.debug("city Name :" + city.getCityName());
 		// get coordinate info if City is inserted for the first time
 		if (flag == 0) {

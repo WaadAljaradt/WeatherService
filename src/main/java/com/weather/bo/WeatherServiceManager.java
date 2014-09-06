@@ -50,7 +50,6 @@ public class WeatherServiceManager {
 	@Transactional
 	public WeatherInfo getWeatherInfo(String cityName) throws Exception {
 		String methodName = "getWeatherInfo";
-		String responseName =null;
 		logger.info("In: " + className);
 		logger.debug("In :" + methodName);
 		logger.debug(" get weather info for City :" + cityName);
@@ -78,9 +77,8 @@ public class WeatherServiceManager {
 			}
 			logger.debug("call json parser to create City object and save info from the response");
 			cityDB = jsonParser.ParseToCity(response, 0);
-			responseName = cityDB.getCityName();
-			cityDB.setCityName(cityName);
 			logger.debug("save city object to data base");
+			cityDB.setCityName(cityName);
 			saveCity(cityDB);
 		} else {
 			Integer id = cityDB.getId();
@@ -101,14 +99,9 @@ public class WeatherServiceManager {
 						logger.debug("parse json to City, with flag 1 to indicate not first time city ");
 						cityDB = jsonParser.ParseToCity(response, 1);
 						cityDB.setId(id);
-						responseName = cityDB.getCityName();
-						cityDB.setCityName(cityName);
 						logger.debug("weather with new data need to be inserted in data base");
 						logger.debug(" call city update");
 						dbManager.updateCity(cityDB);
-					}
-					else{
-						responseName = cityDB.getCityName();					
 					}
 				} catch (ParseException e) {
 					logger.error("Date parsing Error");
@@ -119,7 +112,11 @@ public class WeatherServiceManager {
 		}
 		logger.debug("map from city model to vo to be set in weatherInfo object later ");
 		City city = utilMap.getCityVo(cityDB);
-		city.setName(responseName);
+		if(cityDB.getResponse_name() == null ||cityDB.getResponse_name().isEmpty()){
+			city.setName(cityName);
+		}else{
+			city.setName(cityDB.getResponse_name());
+		}
 		info.setCity(city);
 		logger.debug("map from weather model to vo to be set in weatherInfo object later ");
 		Weather weather = utilMap.getWeatherVo(cityDB);

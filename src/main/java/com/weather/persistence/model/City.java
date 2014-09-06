@@ -24,6 +24,8 @@ public class City implements Serializable {
 	private Integer id;
 	@Column(name = "city_name", unique = true)
 	private String cityName;
+	@Column(name = "response_name")
+	private String response_name;
 	@Column(name = "country_name")
 	private String countryName;
 	@Column(name = "sun_rise")
@@ -99,5 +101,14 @@ public class City implements Serializable {
 		}
 		return false;
 	}
+
+	public String getResponse_name() {
+		return response_name;
+	}
+
+	public void setResponse_name(String response_name) {
+		this.response_name = response_name;
+	}
+	
 
 }
