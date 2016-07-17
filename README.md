@@ -17,3 +17,4 @@ Technologies :
 2- All CRUD operations are done using JPA / Hibernate
 
 Please refer to the documentation for more details 
+https://github.com/WaadAljaradt/WeatherService/blob/master/Documentation.docx
